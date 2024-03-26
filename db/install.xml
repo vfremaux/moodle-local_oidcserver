@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/oidcserver/db" VERSION="20240129" COMMENT="XMLDB file for Moodle local/oidcserver"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="local_oidcserver" COMMENT="Default comment for local_oidcserver, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="local_oidcserver_atoken" COMMENT="Stores Auth Token generated for clients">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="identifier" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="expirydatetime" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="useridentifier" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="clientidentifier" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="scopes" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="keypath" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="revoked" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="ix_unique_identifier" TYPE="unique" FIELDS="identifier"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="local_oidcserver_authcode" COMMENT="Stores auth codes to Auth Token holders">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="identifier" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="expirydatetime" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="useridentifier" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="clientidentifier" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="scopes" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="redirecturi" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="revoked" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="ix_unique_identifier" TYPE="unique" FIELDS="identifier"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="local_oidcserver_client" COMMENT="Stores identity of a client application allowed to send auth requests">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="identifier" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="secret" TYPE="char" LENGTH="48" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="userallow" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="userdeny" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="redirecturi" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="logouturi" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="isconfidential" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="ix_unique_identifier" TYPE="unique" FIELDS="identifier"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="local_oidcserver_rtoken" COMMENT="Stores refresh tokens">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="identifier" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="expirydatetime" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="accesstokenidentifier" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="ix_unique_identifier" TYPE="unique" FIELDS="identifier"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="local_oidcserver_scope" COMMENT="Defines Scope for which we deliver Auth Codes">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="identifier" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="description" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="ix_unique_identifier" TYPE="unique" FIELDS="identifier"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
