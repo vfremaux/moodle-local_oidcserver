@@ -95,7 +95,11 @@ class local_oidcserver_renderer extends plugin_renderer_base {
         return $OUTPUT->render_from_template('local_oidcserver/menus', $template);
     }
 
-    public function addclientlink() {
+    public function addclientlink($clients) {
+
+        if (count($clients) >= 10) {
+            return get_string('communityversionclients', 'local_oidcserver');
+        }
 
         $url = new moodle_url('/local/oidcserver/edit_client.php');
         $link = '<a href="'.$url.'">'.get_string('addclient', 'local_oidcserver').'</a>';

@@ -32,6 +32,19 @@ if (empty($config->enabled)) {
     throw new moodle_exception("Oidc server not enabled in this moodle instance");
 }
 
+// Extract key details
+$details = openssl_pkey_get_details(openssl_pkey_get_public($config->encryptionkey));
+
+if ($details === false) {
+    throw new moodle_exception('Public key seems malformed or missing in oidcserver config.');
+}
+
+// modulus
+$modulus = base64_encode($details['rsa']['n']);
+
+// exponent
+$exponent = base64_encode($details['rsa']['e']);
+
 $json = new StdClass();
 if ($config->encryptionalgorithm == 'RSA') {
     $json->kty = 'RSA';
@@ -42,8 +55,8 @@ if ($config->encryptionalgorithm == 'RSA') {
 }
 $json->use = 'sig';
 $json->kid = '1';
-$json->n = $config->encryptionkey;
-$json->e = '';
+$json->n = $modulus;
+$json->e = $exponent;
 
 header("Content-type:application/json");
 echo json_encode($json);

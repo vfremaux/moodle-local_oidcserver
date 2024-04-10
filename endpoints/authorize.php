@@ -146,15 +146,16 @@ try {
             // At this point you should make some controls about user, if this class of users are allowed
             // to be authorized.
 
+            $client = $authRequest->getclient();
+
             if (local_oidcserver_supports_feature('extended/userfiltering')) {
-            	include_once($CFG->dirroot.'/local/oidcserver/pro/localprolib.php);
-				local_oidcserver_apply_flter_rules($USER);            	
+                include_once($CFG->dirroot.'/local/oidcserver/pro/localprolib.php');
+                \local_oidcserver\local_pro_manager::check_user($client);
             }
 
             // At this point you should redirect the user to an authorization page.
             // This form will ask the user to approve the client and the scopes requested.
 
-            $client = $authRequest->getclient();
             // Requires a bit more than a ClientEntityInterface to get moodle id (shorter then client identifier)
             $hasmarked = get_user_preferences('oidcconsent_'.$client->get_id(), false, $USER);
 

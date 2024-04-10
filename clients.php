@@ -24,6 +24,7 @@
 
 require('../../config.php');
 require_once($CFG->dirroot.'/local/oidcserver/clients.controller.php');
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
 
 $action = optional_param('what', '', PARAM_TEXT);
 
@@ -54,6 +55,11 @@ echo $OUTPUT->header();
 
 echo $renderer->clients($clients);
 
-echo $renderer->addclientlink();
+if (local_oidcserver_supports_feature() == 'pro') {
+    include_once($CFG->dirroot.'/local/oidcserver/pro/localprolib.php');
+    echo \local_oidcserver\local_pro_manager::addclientlink($clients);
+} else {
+    echo $renderer->addclientlink($clients);
+}
 
 echo $OUTPUT->footer();

@@ -79,4 +79,6 @@ If the rule is a single rexexp (no prefix, or REGEXP: prefix), will apply to use
 If the rule has MOODLESCRIPT: prefix, will be evaluated by a moodlescript engine, in the system context.
 ";
 
+$string['communityversionclients'] = 'This is a community version. You can serve up to 10 Oauth/OIDC clients';
+
 include(__DIR__.'/pro_additional_strings.php');
