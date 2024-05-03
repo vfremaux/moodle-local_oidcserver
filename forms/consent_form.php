@@ -38,7 +38,7 @@ class consent_form extends moodleform {
             $mform->addElement('static', 'scope'.$scope->get_id(), $scope->getIdentifier(), $scope->get_description());
         }
 
-        $additional = ['phone1', 'phone2', 'idnumber', 'institution', 'department', 'address', 'city'];
+        $additional = ['phone1', 'idnumber', 'username', 'middlename', 'alternatename', 'institution', 'department', 'address', 'city', 'timezone'];
         foreach ($additional as $fieldkey) {
             if (!empty($USER->$fieldkey)) {
                 $mform->addElement('checkbox', 'allow_'.$fieldkey, get_string($fieldkey));

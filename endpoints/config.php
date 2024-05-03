@@ -40,6 +40,9 @@ $jsonconfig->revoke_endpoint = $CFG->wwwroot.'/local/oidcserver/endpoints/revoke
 $jsonconfig->logout_endpoint = $CFG->wwwroot.'/local/oidcserver/endpoints/logout.php';
 $jsonconfig->userinfo_endpoint = $CFG->wwwroot.'/local/oidcserver/endpoints/userinfo.php';
 $jsonconfig->jwks_uri = $CFG->wwwroot.'/local/oidcserver/endpoints/jwks.php';
+$jsonconfig->response_types_supported = ['0' => 'code', '1' => 'id_token token'];
+$jsonconfig->subject_types_supported = ['0' => 'public'];
+$jsonconfig->id_token_signing_alg_values_supported = ['0' => 'RS256'];
 
 header("Content-type:application/json");
 echo json_encode($jsonconfig);

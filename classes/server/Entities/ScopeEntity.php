@@ -22,14 +22,17 @@ class ScopeEntity implements ScopeEntityInterface
 
     protected $description;
 
-    protected function __construct(int $id, string $identifier, string $description) {
+    protected $defaultlocalinfo;
+
+    protected function __construct(int $id, string $identifier, string $description, string $defaultlocalinfo) {
         $this->id = $id;
         $this->identifier = $identifier;
         $this->description = $description;
+        $this->defaultlocalinfo = $defaultlocalinfo;
     }
 
     public static function getNew() {
-        return new ScopeEntity(0, '', '');
+        return new ScopeEntity(0, '', '', '');
     }
 
     public static function getById($id) {
@@ -39,7 +42,7 @@ class ScopeEntity implements ScopeEntityInterface
         if (!$record) {
             throw new OAuthServerException("Undefined scope by id $id ");
         }
-        return new ScopeEntity($record->id, $record->identifier, $record->description);
+        return new ScopeEntity($record->id, $record->identifier, $record->description, $record->defaultlocalinfo);
     }
 
     public static function getByIdentifier($identifier) {
@@ -49,7 +52,7 @@ class ScopeEntity implements ScopeEntityInterface
         if (!$record) {
             throw new OAuthServerException("Undefined scope by Identifier $identifier ", 500, "Bad confoguration", 500);
         }
-        return new ScopeEntity($record->id, $record->identifier, $record->description);
+        return new ScopeEntity($record->id, $record->identifier, $record->description, $record->defaultlocalinfo);
     }
 
     public function commit() {
@@ -58,6 +61,7 @@ class ScopeEntity implements ScopeEntityInterface
         $record = new StdClass;
         $record->identifier = $this->identifier;
         $record->description = $this->descripion;
+        $record->defaultlocalinfo = $this->defaultlocalinfo;
 
         if ($this->id == 0) {
             $this->id = $DB->insert_record('local_oidcserver_scope', $record);
@@ -89,5 +93,9 @@ class ScopeEntity implements ScopeEntityInterface
 
     public function get_description() {
         return $this->description;
+    }
+
+    public function get_localinfo() {
+        return $this->defaultlocalinfo;
     }
 }

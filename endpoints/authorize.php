@@ -45,6 +45,7 @@ require_once($CFG->dirroot.'/local/oidcserver/classes/server/Entities/UserEntity
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Http/ServerRequest.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Http/Stream.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Http/Response.php');
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
 
 use OpenIDConnectServer\IdTokenResponse;
 use OpenIDConnectServer\ClaimExtractor;
@@ -158,16 +159,17 @@ try {
 
             // Requires a bit more than a ClientEntityInterface to get moodle id (shorter then client identifier)
             $hasmarked = get_user_preferences('oidcconsent_'.$client->get_id(), false, $USER);
-
-            if (!$hasmarked && !empty($config->getconsent) && is_null($authRequest->getUser())) {
+            $forcedconsent = optional_param('prompt', false, PARAM_TEXT);
+            if ((!$hasmarked && !empty($config->getconsent) && is_null($authRequest->getUser())) || ($forcedconsent == 'consent')) {
                 $consenturl = new moodle_url('/local/oidcserver/consent.php');
                 redirect($consenturl);
             }
 
             // At this point you should redirect the user to an authentication page.
             // This form will ask the user to approve the client and the scopes requested.
-
-            $authRequest->setUser(new UserEntity($USER));
+            $oidcuser = new UserEntity($USER);
+            $oidcuser->setClient($client); // Do allow consent checking against this user/client.
+            $authRequest->setUser($oidcuser);
 
             // Once the user has approved or denied the client update the status
             // (true = approved, false = denied)
@@ -178,9 +180,41 @@ try {
             $redirectresponse = $server->completeAuthorizationRequest($authRequest, $response);
 
             $redirectresponse->send();
+            unset($SESSION->authRequest);
             die;
         } else {
-            echo "No authorisation request pending in session. ";
+            // echo "No authorisation request pending in session. ";
+            // Process new authrequest agreeing directly as already in session.
+            $authRequest = $server->validateAuthorizationRequest($request);
+            $SESSION->authRequest = $authRequest;
+
+            $client = $authRequest->getclient();
+
+            // At this point you should redirect the user to an authorization page.
+            // This form will ask the user to approve the client and the scopes requested.
+
+            // Requires a bit more than a ClientEntityInterface to get moodle id (shorter then client identifier)
+            $hasmarked = get_user_preferences('oidcconsent_'.$client->get_id(), false, $USER);
+            $forcedconsent = optional_param('prompt', false, PARAM_TEXT);
+            if ((!$hasmarked && !empty($config->getconsent) && is_null($authRequest->getUser())) || $forcedconsent) {
+                $consenturl = new moodle_url('/local/oidcserver/consent.php');
+                redirect($consenturl);
+            }
+
+            // Do NOT put in session an we are procesisng immediately.
+            $oidcuser = new UserEntity($USER);
+            $oidcuser->setClient($client); // Do allow consent checking against this user/client.
+            $authRequest->setUser($oidcuser);
+
+            // Immediately approve.
+            // (true = approved, false = denied)
+            $authRequest->setAuthorizationApproved(true);
+
+            // Return the HTTP redirect response
+            $redirectresponse = $server->completeAuthorizationRequest($authRequest, $response);
+            unset($SESSION->authRequest);
+            $redirectresponse->send();
+            die;
         }
 
     }

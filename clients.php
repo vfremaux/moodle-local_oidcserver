@@ -53,6 +53,8 @@ $clients = $DB->get_records('local_oidcserver_client', []);
 
 echo $OUTPUT->header();
 
+echo $renderer->tabs('clients');
+
 echo $renderer->clients($clients);
 
 if (local_oidcserver_supports_feature() == 'pro') {

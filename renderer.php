@@ -55,15 +55,17 @@ class local_oidcserver_renderer extends plugin_renderer_base {
     public function scopes($scopes = []) {
         $identifierstr = get_string('identifier', 'local_oidcserver');
         $descriptionstr = get_string('description', 'local_oidcserver');
+        $defaultinfostr = get_string('defaultlocalinfo', 'local_oidcserver');
         $table = new html_table();
-        $table->head = [$identifierstr, $descriptionstr, ''];
+        $table->head = [$identifierstr, $descriptionstr, $defaultinfostr, ''];
         $table->width = '100%';
-        $table->size = ['40%', '40%', '20%'];
+        $table->size = ['30%', '30%', '30%', '10%'];
 
         foreach ($scopes as $c) {
             $row = [];
             $row[] = $c->identifier;
             $row[] = $c->description;
+            $row[] = $c->defaultlocalinfo;
 
             $editurl = new moodle_url('/local/oidcserver/edit_scope.php', ['id' => $c->id]);
             $cmds = '<a href="'.$editurl.'">'.$this->output->pix_icon('t/edit', 'edit').'</a>';
@@ -113,5 +115,18 @@ class local_oidcserver_renderer extends plugin_renderer_base {
         $link = '<a href="'.$url.'">'.get_string('addscope', 'local_oidcserver').'</a>';
 
         return $link;
+    }
+
+    public function tabs($view) {
+        $tabname = get_string('clients', 'local_oidcserver');
+        $row[] = new tabobject('clients', new moodle_url('/local/oiddcserver/clients.php'), $tabname);
+        $tabname = get_string('scopes', 'local_oidcserver');
+        $row[] = new tabobject('scopes', new moodle_url('/local/oidcserver/scopes.php'), $tabname);
+        /*
+        $tabname = get_string('authcodes', 'local_oidcserver');
+        $row[] = new tabobject('authcodes', new moodle_url('/local/oidcserver/authcodes.php'), $tabname);
+        */
+        $tabrows[] = $row;
+        print_tabs($tabrows, $view);
     }
 }

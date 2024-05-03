@@ -45,18 +45,21 @@ $modulus = base64_encode($details['rsa']['n']);
 // exponent
 $exponent = base64_encode($details['rsa']['e']);
 
-$json = new StdClass();
+$key = new StdClass();
 if ($config->encryptionalgorithm == 'RSA') {
-    $json->kty = 'RSA';
-    $json->alg = 'RS256';
+    $key->kty = 'RSA';
+    $key->alg = 'RS256';
 } else {
-    $json->kty = 'HMAC';
-    $json->alg = 'HS256';
+    $key->kty = 'HMAC';
+    $key->alg = 'HS256';
 }
-$json->use = 'sig';
-$json->kid = '1';
-$json->n = $modulus;
-$json->e = $exponent;
+$key->use = 'sig';
+$key->kid = '1';
+$key->n = $modulus;
+$key->e = $exponent;
+
+$json = ['keys' => []];
+$json['keys'][] = $key;
 
 header("Content-type:application/json");
 echo json_encode($json);
