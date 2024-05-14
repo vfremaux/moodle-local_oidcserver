@@ -457,29 +457,25 @@ abstract class AbstractGrant implements GrantTypeInterface
         $userIdentifier,
         array $scopes = []
     ) {
-        debug_trace("Start issuing access token");
+        if (function_exists('debug_trace')) debug_trace("Start issuing access token", TRACE_DEBUG);
         $maxGenerationAttempts = self::MAX_RANDOM_TOKEN_GENERATION_ATTEMPTS;
 
-        debug_trace("Requiring to repo");
+        if (function_exists('debug_trace')) debug_trace("Requiring to repo", TRACE_DEBUG);
         $accessToken = $this->accessTokenRepository->getNewToken($client, $scopes, $userIdentifier);
-        debug_trace("Generated ");
+        if (function_exists('debug_trace')) debug_trace("Generated ", TRACE_DEBUG);
         $accessToken->setExpiryDateTime((new DateTimeImmutable())->add($accessTokenTTL));
-        debug_trace("Set expiry done ");
+        if (function_exists('debug_trace')) debug_trace("Set expiry done ", TRACE_DEBUG);
         $accessToken->setPrivateKey($this->privateKey);
 
-        debug_trace("access token Generating");
+        if (function_exists('debug_trace')) debug_trace("access token Generating", TRACE_DEBUG);
         while ($maxGenerationAttempts-- > 0) {
             $accessToken->setIdentifier($this->generateUniqueIdentifier());
             try {
-                debug_trace("Try to commit access token ");
-                debug_trace($accessToken);
                 $this->accessTokenRepository->persistNewAccessToken($accessToken);
 
-                debug_trace("Commited ");
                 return $accessToken;
             } catch (UniqueTokenIdentifierConstraintViolationException $e) {
                 if ($maxGenerationAttempts === 0) {
-                    debug_trace("access token Too many tries");
                     throw $e;
                 }
             }
@@ -546,17 +542,15 @@ abstract class AbstractGrant implements GrantTypeInterface
      */
     protected function issueRefreshToken(AccessTokenEntityInterface $accessToken)
     {
-        debug_trace("Make new refresh token");
+        if (function_exists('debug_trace')) debug_trace("Make new refresh token", TRACE_DEBUG);
         $refreshToken = $this->refreshTokenRepository->getNewRefreshToken();
 
         if ($refreshToken === null) {
-            debug_trace("Could not instanciate");
+            if (function_exists('debug_trace')) debug_trace("Could not instanciate", TRACE_DEBUG);
             return null;
         }
 
-        debug_trace("Setting date");
         $refreshToken->setExpiryDateTime((new DateTimeImmutable())->add($this->refreshTokenTTL));
-        debug_trace("Setting access token");
         $refreshToken->setAccessToken($accessToken);
 
         $maxGenerationAttempts = self::MAX_RANDOM_TOKEN_GENERATION_ATTEMPTS;
@@ -564,9 +558,7 @@ abstract class AbstractGrant implements GrantTypeInterface
         while ($maxGenerationAttempts-- > 0) {
             $refreshToken->setIdentifier($this->generateUniqueIdentifier());
             try {
-                debug_trace("Save token");
                 $this->refreshTokenRepository->persistNewRefreshToken($refreshToken);
-                debug_trace("Token saved");
 
                 return $refreshToken;
             } catch (UniqueTokenIdentifierConstraintViolationException $e) {

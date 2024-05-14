@@ -41,6 +41,10 @@ class oidcserver_scope_form extends moodleform {
         $mform->setType('description', PARAM_TEXT);
         $mform->addRule('description', null, 'required');
 
+        $mform->addElement('text', 'defaultlocalinfo', get_string('defaultinfo', 'local_oidcserver'), "size=80 maxlength=255");
+        $mform->setType('defaultlocalinfo', PARAM_TEXT);
+        $mform->addRule('defaultlocalinfo', null, 'required');
+
         $this->add_action_buttons();
 
     }
@@ -52,13 +56,17 @@ class oidcserver_scope_form extends moodleform {
 
         if (!empty($data->id)) {
             $params = [$data->id, $data->identifier];
-            if ($DB->get_record_select('local_oidcserver_client', ' id != ? and identifier = ? ', $params)) {
+            if ($DB->get_record_select('local_oidcserver_scope', ' id != ? and identifier = ? ', $params)) {
                 $error['identifier'] = "This identifier is used";
             }
 
             $params = [$data->id, $data->name];
-            if ($DB->get_record_select('local_oidcserver_client', ' id != ? and name = ? ', $params)) {
+            if ($DB->get_record_select('local_oidcserver_scope', ' id != ? and name = ? ', $params)) {
                 $error['identifier'] = "This name is used";
+            }
+
+            if (empty($data->defaultlocalinfo)) {
+                $error['defaultlocalinfo'] = "Local info for scope must be given";
             }
         }
     }

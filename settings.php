@@ -40,6 +40,15 @@ if ($hassiteconfig) {
     $desc = '';
     $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
 
+    $algoptions = [
+        'RSA' => 'RSA (RS256)',
+        'HMAC'=> 'HMAC (HS256)'
+    ];
+    $key = 'local_oidcserver/encryptionalgorithm';
+    $label = get_string('configencryptionalgorithm', 'local_oidcserver');
+    $desc = get_string('configencryptionalgorithm_desc', 'local_oidcserver');
+    $settings->add(new admin_setting_configselect($key, $label, $desc, 'RSA', $algoptions));
+
     $key = 'local_oidcserver/privatekey';
     $label = get_string('configprivatekey', 'local_oidcserver');
     $desc = get_string('configprivatekey_desc', 'local_oidcserver');

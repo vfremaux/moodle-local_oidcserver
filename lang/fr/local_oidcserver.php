@@ -38,6 +38,8 @@ $string['configenabled'] = 'Actif';
 $string['configenabled_desc'] = 'Active le fonnctionnement des points de terminaison';
 $string['configencryptionkey'] = 'Clef publique';
 $string['configencryptionkey_desc'] = 'Cette clef publique peut être échangée avec les tiers pour qu\'ils cryptent des message à notre intention.';
+$string['configencryptionalgorithm'] = 'Algorithme de cryptage des clefs';
+$string['configencryptionalgorithm_desc'] = 'RSA ou HMAC sont supportés.';
 $string['configfeatures'] = 'Configuration du serveur OIDC';
 $string['configgetconsent'] = 'Demander le consentement sur la transmission de données';
 $string['configgetconsent_desc'] = 'Si activé, une étape supplémentaire dans la procédure d\'authentification demande une fois le consentement sur le tranport de données.';
@@ -46,6 +48,8 @@ $string['configprivatekey_desc'] = 'La clef privée de cryptage interne. Ne doit
 $string['consenthead'] = 'Transmission de données personnelles';
 $string['consenthelp'] = 'Ceci est un message informatif relatif à vos données personnelles. En acceptant l\'authentification, vous tranmettrez vos données d\'identité suivantes au service applicatif : ';
 $string['consenthelptail'] = 'Vous pouvez refuser de transmettre certaines données, mais votre profil sur le service sera incomplet. Si vous refusez votre consentement sur l\'ensemble des données, votre profil ne pourra être créé.';
+$string['defaultlocalinfo'] = 'Info locale associée par défaut';
+$string['defaultinfo'] = 'Info locale associée par défaut';
 $string['denyallow'] = 'Interdire / Autoriser';
 $string['description'] = 'Description';
 $string['editclient'] = 'Modifier un client';
@@ -77,5 +81,6 @@ If the rule is a single rexexp (no prefix, or REGEXP: prefix), will apply to use
 If the rule has MOODLESCRIPT: prefix, will be evaluated by a moodlescript engine, in the system context.
 ";
 
+$string['communityversionclients'] = 'La version publique du plugin autorise la connexion jusqu\'à 10 Oauth/OIDC.';
 
 include(__DIR__.'/pro_additional_strings.php');

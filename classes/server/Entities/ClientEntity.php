@@ -27,7 +27,7 @@ class ClientEntity implements ClientEntityInterface
 
     protected $isconfidential;
 
-    protected function __construct($id = 0, string $identifier, string $name, string $secret, string $redirecturi, string $singlelogouturi, $isconfidential = 0) {
+    protected function __construct(int $id, string $identifier, string $name, string $secret, string $redirecturi, string $singlelogouturi, $isconfidential = 0) {
         $this->id = $id;
         $this->identifier = $identifier;
         $this->name = $name;
@@ -72,8 +72,8 @@ class ClientEntity implements ClientEntityInterface
         return new ClientEntity($record->id, $record->identifier,
             $record->name,
             $record->secret,
-            $record->redirecturi,
-            $record->singlelogouturi,
+            $record->redirecturi ?? '',
+            $record->singlelogouturi ?? '',
             $record->isconfidential);
     }
 

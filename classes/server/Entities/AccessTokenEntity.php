@@ -24,7 +24,7 @@ class AccessTokenEntity extends TokenEntity implements AccessTokenEntityInterfac
 
     protected $revoked;  // Revocation datetime, or 0 if valid token.
 
-    protected function __construct($id, string $identifier, $time, $useridentifier, ?ClientEntity $client = null, $keypath = '', $revoked = 0) {
+    protected function __construct(int $id, string $identifier, $time, $useridentifier, ?ClientEntity $client = null, $keypath = '', $revoked = 0) {
         parent::__construct($id, $identifier, $time, $useridentifier, $client);
         $this->revoked = $revoked;
         if ($keypath instanceof CryptKey) {

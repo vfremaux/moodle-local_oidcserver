@@ -17,7 +17,7 @@
 
 define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
 
-    var shoppro = {
+    var oidcserverpro = {
 
         component: 'local_oidcserver',
         shortcomponent: 'local_oidcserver',
@@ -25,15 +25,15 @@ define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
 
         init: function() {
 
-            var licensekeyid = '#id_s_' + shoppro.component + '_licensekey';
+            var licensekeyid = '#id_s_' + oidcserverpro.component + '_licensekey';
             $(licensekeyid).bind('change', this.check_product_key);
             $(licensekeyid).trigger('change');
-            log.debug('AMD Pro js initialized for ' + shoppro.component + ' system');
+            log.debug('AMD Pro js initialized for ' + oidcserverpro.component + ' system');
         },
 
         check_product_key: function() {
 
-            var licensekeyid = '#id_s_' + shoppro.component + '_licensekey';
+            var licensekeyid = '#id_s_' + oidcserverpro.component + '_licensekey';
 
             var that = $(this);
 
@@ -41,7 +41,7 @@ define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
             var payload = productkey.substr(0, 14);
             var crc = productkey.substr(14, 2);
 
-            var calculated = shoppro.checksum(payload);
+            var calculated = oidcserverpro.checksum(payload);
 
             var validicon = ' <img src="' + cfg.wwwroot + '/pix/i/valid.png' + '">';
             var cautionicon = ' <img src="' + cfg.wwwroot + '/pix/i/warning.png' + '">';
@@ -49,11 +49,11 @@ define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
             var waiticon = ' <img src="' + cfg.wwwroot + '/pix/i/ajaxloader.gif' + '">';
 
             if (crc === calculated) {
-                var url = cfg.wwwroot + '/' + shoppro.componentpath + '/pro/ajax/services.php?';
+                var url = cfg.wwwroot + '/' + oidcserverpro.componentpath + '/pro/ajax/services.php?';
                 url += 'what=license';
                 url += '&service=check';
                 url += '&customerkey=' + that.val();
-                url += '&provider=' + $('#id_s_' + shoppro.component + '_licenseprovider').val();
+                url += '&provider=' + $('#id_s_' + oidcserverpro.component + '_licenseprovider').val();
 
                 $(licensekeyid + ' + img').remove();
                 $(licensekeyid).after(waiticon);
@@ -100,5 +100,5 @@ define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
         }
     };
 
-    return shoppro;
+    return oidcserverpro;
 });

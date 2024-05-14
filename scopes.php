@@ -52,6 +52,8 @@ $scopes = $DB->get_records('local_oidcserver_scope', []);
 
 echo $OUTPUT->header();
 
+echo $renderer->tabs('scopes');
+
 echo $renderer->scopes($scopes);
 
 echo $renderer->addscopelink();
