@@ -15,24 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details.
- *
- * @package    local_oidcserver
- * @category   local
- * @author     Valery Fremaux <valery.fremaux@gmail.com>
- * @copyright  2010 onwards Valery Fremaux <valery.fremaux@gmail.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
+ * @package   local_oidcserver
+ * @category  local
+ * @copyright 2006 Valery Fremaux
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2023032603;   // The (date) version of this plugin.
-$plugin->requires = 2022112801;   // Requires this Moodle version.
-$plugin->component = 'local_oidcserver';
-$plugin->release = '4.1.0 (build 2023032603)';
-$plugin->maturity = MATURITY_RC;
-$plugin->supported = [401, 402];
-
-// Non moodle attributes.
-$plugin->codeincrement = '4.1.0000';
-
+$definitions = array(
+    'pro' => array(
+        'mode' => cache_store::MODE_APPLICATION
+    )
+);

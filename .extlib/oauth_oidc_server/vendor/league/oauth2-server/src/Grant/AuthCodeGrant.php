@@ -97,35 +97,33 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
         ResponseTypeInterface $responseType,
         DateInterval $accessTokenTTL
     ) {
-        debug_trace("Extract client ids");
+        if (function_exists('debug_trace')) debug_trace("Extract client ids", TRACE_DEBUG);
         list($clientId) = $this->getClientCredentials($request);
 
-        debug_trace("Get client as $clientId");
         $client = $this->getClientEntityOrFail($clientId, $request);
 
         // Only validate the client if it is confidential
         if ($client->isConfidential()) {
-            debug_trace("Validate confidential client");
+            if (function_exists('debug_trace')) debug_trace("Validate confidential client");
             $this->validateClient($request);
         }
 
         $encryptedAuthCode = $this->getRequestParameter('code', $request, null);
 
         if (!\is_string($encryptedAuthCode)) {
-            debug_trace("Exception bad code value ");
+            if (function_exists('debug_trace')) debug_trace("Exception bad code value ", TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('code');
         }
 
         try {
             $authCodePayload = \json_decode($this->decrypt($encryptedAuthCode));
-            debug_trace("Authcode payload decrypted");
-            debug_trace($authCodePayload);
+            /*
+            debug_trace("Authcode payload decrypted", TRACE_DEBUG);
+            debug_trace($authCodePayload, TRACE_DEBUG);
+            */
 
             $this->validateAuthorizationCode($authCodePayload, $client, $request);
-            debug_trace("Authcode validated... now finalize scopes");
             $validatedscopes = $this->validateScopes($authCodePayload->scopes);
-            debug_trace("Validated scopes...");
-            debug_trace($validatedscopes);
 
             $scopes = $this->scopeRepository->finalizeScopes(
                 $validatedscopes,
@@ -133,13 +131,14 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
                 $client,
                 $authCodePayload->user_id
             );
-            debug_trace("Finalized scopes...");
-            debug_trace($scopes);
+            /*
+            debug_trace("Finalized scopes...", TRACE_DEBUG);
+            debug_trace($scopes, TRACE_DEBUG);
+            */
         } catch (LogicException $e) {
             throw OAuthServerException::invalidRequest('code', 'Cannot decrypt the authorization code', $e);
         }
 
-        debug_trace("Check verification ");
         $codeVerifier = $this->getRequestParameter('code_verifier', $request, null);
 
         // If a code challenge isn't present but a code verifier is, reject the request to block PKCE downgrade attack
@@ -155,27 +154,23 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
         }
 
         // Issue and persist new access token
-        debug_trace("Issue access token ");
         $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $authCodePayload->user_id, $scopes);
-        debug_trace("Access token issued");
         $this->getEmitter()->emit(new RequestAccessTokenEvent(RequestEvent::ACCESS_TOKEN_ISSUED, $request, $accessToken));
         $responseType->setAccessToken($accessToken);
 
         // Issue and persist new refresh token if given
-        debug_trace("Issuing refresh token ...");
+        if (function_exists('debug_trace')) debug_trace("Issuing refresh token ...", TRACE_DEBUG);
         $refreshToken = $this->issueRefreshToken($accessToken);
 
         if ($refreshToken !== null) {
-            debug_trace("Processing refresh token ...");
             $this->getEmitter()->emit(new RequestRefreshTokenEvent(RequestEvent::REFRESH_TOKEN_ISSUED, $request, $refreshToken));
             $responseType->setRefreshToken($refreshToken);
         }
 
         // Revoke used auth code
-        debug_trace("Revoking consumed authcode ... ".$authCodePayload->auth_code_id);
         $this->authCodeRepository->revokeAuthCode($authCodePayload->auth_code_id);
 
-        debug_trace("End process and respond ");
+        if (function_exists('debug_trace')) debug_trace("End process and respond ", TRACE_DEBUG);
         return $responseType;
     }
 
@@ -225,34 +220,34 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
         ServerRequestInterface $request
     ) {
         if (!\property_exists($authCodePayload, 'auth_code_id')) {
-            debug_trace("Authorization code malformed : missing auth_code_id", TRACE_DEBUG);
+            if (function_exists('debug_trace')) debug_trace("Authorization code malformed : missing auth_code_id", TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('code', 'Authorization code malformed');
         }
 
         if (\time() > $authCodePayload->expire_time) {
-            debug_trace("Authorization code has expired", TRACE_DEBUG);
+            if (function_exists('debug_trace')) debug_trace("Authorization code has expired", TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('code', 'Authorization code has expired');
         }
 
         if ($this->authCodeRepository->isAuthCodeRevoked($authCodePayload->auth_code_id) === true) {
-            debug_trace("Authorization code has been revoked", TRACE_DEBUG);
+            if (function_exists('debug_trace')) debug_trace("Authorization code has been revoked", TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('code', 'Authorization code has been revoked');
         }
 
         if ($authCodePayload->client_id !== $client->getIdentifier()) {
-            debug_trace("Authorization code was not issued to this client", TRACE_DEBUG);
+            if (function_exists('debug_trace')) debug_trace("Authorization code was not issued to this client", TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('code', 'Authorization code was not issued to this client');
         }
 
         // The redirect URI is required in this request
         $redirectUri = $this->getRequestParameter('redirect_uri', $request, null);
         if (empty($authCodePayload->redirect_uri) === false && $redirectUri === null) {
-            debug_trace("No redirect uri", TRACE_DEBUG);
+            if (function_exists('debug_trace')) debug_trace("No redirect uri", TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('redirect_uri');
         }
 
         if ($authCodePayload->redirect_uri !== $redirectUri) {
-            debug_trace("Redirect uri mismatch", TRACE_DEBUG);
+            if (function_exists('debug_trace')) debug_trace("Redirect uri mismatch", TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('redirect_uri', 'Invalid redirect URI');
         }
     }
@@ -407,8 +402,10 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
                 'code_challenge'        => $authorizationRequest->getCodeChallenge(),
                 'code_challenge_method' => $authorizationRequest->getCodeChallengeMethod(),
             ];
-            debug_trace("Response payload");
-            debug_trace($payload);
+            if (function_exists('debug_trace')) {
+                debug_trace("Response payload", TRACE_DEBUG);
+                debug_trace($payload, TRACE_DEBUG);
+            }
 
             $jsonPayload = \json_encode($payload);
 

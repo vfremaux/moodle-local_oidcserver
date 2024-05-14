@@ -18,7 +18,7 @@ use function in_array;
 final class Builder implements BuilderInterface
 {
     /** @var array<string, mixed> */
-    private array $headers = ['typ' => 'JWT', 'alg' => null];
+    private array $headers = ['typ' => 'JWT', 'alg' => null, 'kid' => 1];
 
     /** @var array<string, mixed> */
     private array $claims = [];

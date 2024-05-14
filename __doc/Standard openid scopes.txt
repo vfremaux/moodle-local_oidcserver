@@ -1,0 +1,24 @@
+openid
+    sub (identifiant de l'utilisateur),
+	iss (l'émetteur de l'ID token),
+	aud (audience de l'ID token),
+	exp (heure d'expiration de l'ID token),
+	iat (heure de création de l'ID token)
+email
+    email (adresse e-mail de l'utilisateur),
+	email_verified (vérification de l'adresse e-mail)
+profile	
+    name (nom complet de l'utilisateur),
+	family_name (nom de famille de l'utilisateur),
+	given_name (prénom de l'utilisateur),
+	middle_name (deuxième prénom de l'utilisateur),
+	nickname (surnom de l'utilisateur),
+	preferred_username (nom d'utilisateur préféré),
+	profile (URL du profil de l'utilisateur),
+	picture (URL de la photo de profil de l'utilisateur),
+	website (URL du site Web de l'utilisateur),
+	gender (genre de l'utilisateur),
+	birthdate (date de naissance de l'utilisateur),
+	zoneinfo (fuseau horaire de l'utilisateur),
+	locale (langue préférée de l'utilisateur),
+	updated_at (dernière mise à jour des informations de l'utilisateur)

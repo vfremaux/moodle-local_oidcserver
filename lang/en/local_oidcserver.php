@@ -37,7 +37,9 @@ $string['clients'] = 'Clients';
 $string['configenabled'] = 'Enable';
 $string['configenabled_desc'] = 'Enable response of endpoints';
 $string['configencryptionkey'] = 'Encryption key (public key)';
-$string['configencryptionkey_desc'] = 'The publc counter part of our key so that clients can encrypt messages for us, or decode our messages.';
+$string['configencryptionkey_desc'] = 'The public counter part of our key so that clients can encrypt messages for us, or decode our messages.';
+$string['configencryptionalgorithm'] = 'Encryption algorithm of the keys';
+$string['configencryptionalgorithm_desc'] = 'RSA or HMAC are supported.';
 $string['configfeatures'] = 'OIDC Server configuration';
 $string['configgetconsent'] = 'Ask for user consent';
 $string['configgetconsent_desc'] = 'If enabled, an additional step in login process will ask for data transmission consent once.';
@@ -46,6 +48,8 @@ $string['configprivatekey_desc'] = 'Our own private and secret key. (Give to no 
 $string['consenthead'] = 'Personal data exchange with remote service';
 $string['consenthelp'] = 'By consenting to authentication, you will transmit following personal information to the calling service: ';
 $string['consenthelptail'] = 'You may uncheck some data to send, resulting in your remote profile baing incomplete. If you decline the whole transmission set, your remote profile cannot be created..';
+$string['defaultlocalinfo'] = 'Default local info';
+$string['defaultinfo'] = 'Default local info';
 $string['denyallow'] = 'Deny / Allow';
 $string['description'] = 'Description';
 $string['editclient'] = 'Edit client';
@@ -76,5 +80,7 @@ Filters the local users allowed to be authorized for this client. One expression
 If the rule is a single rexexp (no prefix, or REGEXP: prefix), will apply to username.\n
 If the rule has MOODLESCRIPT: prefix, will be evaluated by a moodlescript engine, in the system context.
 ";
+
+$string['communityversionclients'] = 'This is a community version. You can serve up to 10 Oauth/OIDC clients';
 
 include(__DIR__.'/pro_additional_strings.php');
