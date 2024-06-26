@@ -23,22 +23,26 @@ class ClientEntity implements ClientEntityInterface
 
     protected $redirecturi;
 
+    protected $altredirecturis;
+
     protected $singlelogouturi;
 
     protected $isconfidential;
 
-    protected function __construct(int $id, string $identifier, string $name, string $secret, string $redirecturi, string $singlelogouturi, $isconfidential = 0) {
+    protected function __construct(int $id, string $identifier, string $name, string $secret, string $redirecturi, 
+            string $altredirecturis, string $singlelogouturi, $isconfidential = 0) {
         $this->id = $id;
         $this->identifier = $identifier;
         $this->name = $name;
         $this->secret = $secret;
         $this->redirecturi = $redirecturi;
+        $this->altredirecturis = $altredirecturis;
         $this->singlelogouturi = $singlelogouturi;
         $this->isconfidential = $isconfidential;
     }
 
     public static function getNew() {
-        return new ClientEntity(0, '', '', '', '', 0);
+        return new ClientEntity(0, '', '', '', '', '', 0);
     }
 
     /**
@@ -55,6 +59,7 @@ class ClientEntity implements ClientEntityInterface
             $record->name,
             $record->secret,
             $record->redirecturi,
+            $record->altredirecturis,
             $record->singlelogouturi,
             $record->isconfidential);
     }
@@ -73,6 +78,7 @@ class ClientEntity implements ClientEntityInterface
             $record->name,
             $record->secret,
             $record->redirecturi ?? '',
+            $record->altredirecturis ?? '',
             $record->singlelogouturi ?? '',
             $record->isconfidential);
     }
@@ -85,6 +91,7 @@ class ClientEntity implements ClientEntityInterface
         $record->name = $this->name;
         $record->secret = $this->srecret;
         $record->redirecturi = $this->redirecturi;
+        $record->altredirecturis = $this->altredirecturis;
         $record->singlelogouturi = $this->singlelogouturi;
         $record->isconfidential = $this->isconfidential;
 
@@ -151,6 +158,27 @@ class ClientEntity implements ClientEntityInterface
      */
     public function getRedirectUri() {
         return $this->redirecturi;
+    }
+
+    /**
+     * Returns the alternative admitted redirect URIs (as an array of strings).
+     *
+     * Alternatively return an indexed array of redirect URIs.
+     *
+     * @return string[]
+     */
+    public function getAltRedirectUris() {
+        return preg_split('/[,\s]+/', $this->altredirecturis);
+    }
+
+    /**
+     * Returns the alternative admitted redirect URIs (as an array of strings).
+     * @param string $redirecturi an explicit redirect URI submitted in Auth Request body.
+     * @return bool
+     */
+    public function matchAltRedirectUri(string $redirecturi) : bool {
+        $uris = $this->getAltRedirectUris();
+       return (in_array(trim($redirecturi)), $uris);
     }
 
     /**

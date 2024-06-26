@@ -37,14 +37,15 @@ function local_oidcserver_supports_feature($feature = null) {
     }
 
     if (!isset($supports)) {
-        $supports = array(
-            'pro' => array(
-                'clients' => 'unlimited'
-            ),
-            'community' => array(
-                'clients' => 'limited'
-            ),
-        );
+        $supports = [
+            'pro' => [
+                'clients' => ['unlimited'],
+                'extended' => ['singlelogout', 'userfiltering']
+            ],
+            'community' => [
+                'clients' => ['limited']
+            ],
+        ];
     }
 
     // Check existance of the 'pro' dir in plugin.
@@ -77,4 +78,15 @@ function local_oidcserver_supports_feature($feature = null) {
     }
 
     return $versionkey;
+}
+
+/**
+ * Plugs before header are sent.
+ * @see $OUTPUT->header();
+ */
+function local_oidcserver_before_http_headers() {
+    $config = get_config('local_oidcserver');
+    if (!empty($config->forceopeningcors)) {
+        header('Access-Control-Allow-Origin: *');
+    }
 }

@@ -24,6 +24,7 @@
         <FIELD NAME="revoked" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="ix_unique_identifier" TYPE="unique" FIELDS="identifier"/>
       </KEYS>
     </TABLE>
@@ -39,6 +40,7 @@
         <FIELD NAME="revoked" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="ix_unique_identifier" TYPE="unique" FIELDS="identifier"/>
       </KEYS>
     </TABLE>
@@ -51,10 +53,12 @@
         <FIELD NAME="userallow" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="userdeny" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="redirecturi" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="altredirecturis" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="logouturi" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="isconfidential" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="ix_unique_identifier" TYPE="unique" FIELDS="identifier"/>
       </KEYS>
     </TABLE>
@@ -66,6 +70,7 @@
         <FIELD NAME="accesstokenidentifier" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="ix_unique_identifier" TYPE="unique" FIELDS="identifier"/>
       </KEYS>
     </TABLE>
@@ -77,6 +82,7 @@
         <FIELD NAME="defaultlocalinfo" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="ix_unique_identifier" TYPE="unique" FIELDS="identifier"/>
       </KEYS>
     </TABLE>

@@ -99,7 +99,7 @@ class local_oidcserver_renderer extends plugin_renderer_base {
 
     public function addclientlink($clients) {
 
-        if (count($clients) >= 10) {
+        if (count($clients) >= 5) {
             return get_string('communityversionclients', 'local_oidcserver');
         }
 

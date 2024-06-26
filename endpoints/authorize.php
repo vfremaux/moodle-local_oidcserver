@@ -130,7 +130,7 @@ try {
         $authRequest = $server->validateAuthorizationRequest($request);
 
         $SESSION->authRequest = $authRequest;
-        $autorizeurl = new moodle_url('/local/oidcserver/endpoints/authorize.php');
+        $autorizeurl = new moodle_url('/local/oidcserver/endpoints/authorize.php', ['prompt' => optional_param('prompt', '', PARAM_TEXT)]);
         $SESSION->wantsurl = $autorizeurl->out();
 
         // Let start the moodleside login sequence

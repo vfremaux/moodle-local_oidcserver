@@ -59,10 +59,21 @@ if ($hassiteconfig) {
     $desc = get_string('configencryptionkey_desc', 'local_oidcserver');
     $settings->add(new admin_setting_configtextarea($key, $label, $desc, ''));
 
+    $key = 'local_oidcserver/clientskeysize';
+    $label = get_string('configclientskeysize', 'local_oidcserver');
+    $desc = get_string('configclientskeysize_desc', 'local_oidcserver');
+    $default = 13;
+    $settings->add(new admin_setting_configtextarea($key, $label, $desc, $default));
+
     $key = 'local_oidcserver/getconsent';
     $label = get_string('configgetconsent', 'local_oidcserver');
     $desc = get_string('configgetconsent_desc', 'local_oidcserver');
     $settings->add(new admin_setting_configcheckbox($key, $label, $desc, true));
+
+    $key = 'local_oidcserver/forceopeningcors';
+    $label = get_string('configforceopeningcors', 'local_oidcserver');
+    $desc = get_string('configforceopeningcors_desc', 'local_oidcserver');
+    $settings->add(new admin_setting_configcheckbox($key, $label, $desc, false));
 
     $manageurl = new moodle_url('/local/oidcserver/index.php');
     $label = get_string('manageoidcserver', 'local_oidcserver');

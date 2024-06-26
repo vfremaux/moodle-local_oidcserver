@@ -34,5 +34,6 @@ $plugin->maturity = MATURITY_RC;
 $plugin->supported = [401, 402];
 
 // Non moodle attributes.
-$plugin->codeincrement = '4.1.0000';
+$plugin->codeincrement = '4.1.0001';
+$plugin->privacy = 'dualrelease';
 
