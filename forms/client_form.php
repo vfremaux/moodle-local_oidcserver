@@ -38,7 +38,7 @@ class oidcserver_client_form extends moodleform {
         $mform->setType('identifier', PARAM_TEXT);
         $mform->disabledIf('identifier', 'generateidentifier', 'checked');
 
-        $group1[] = $mform->createElement('checkbox', 'generateidentifier', get_string('generate', 'local_oidcserver'));
+        $group1[] = $mform->createElement('checkbox', 'generateidentifier', '');
         $mform->setType('generateidentifier', PARAM_BOOL);
         $mform->addGroup($group1, 'idgroup', get_string('identifier', 'local_oidcserver'), [get_string('generate', 'local_oidcserver')], false);
 
@@ -60,6 +60,10 @@ class oidcserver_client_form extends moodleform {
         $mform->setType('redirecturi', PARAM_TEXT);
         $mform->addHelpButton('redirecturi', 'redirecturi', 'local_oidcserver');
         $mform->addRule('redirecturi', null, 'required');
+
+        $mform->addElement('text', 'altredirecturi', get_string('altredirecturis', 'local_oidcserver'), "size=80 maxlength=255");
+        $mform->setType('altredirecturi', PARAM_TEXT);
+        $mform->addHelpButton('altredirecturi', 'altredirecturi', 'local_oidcserver');
 
         $mform->addElement('text', 'singlelogouturi', get_string('singlelogouturi', 'local_oidcserver'), "size=80 maxlength=255");
         $mform->addHelpButton('singlelogouturi', 'singlelogouturi', 'local_oidcserver');
