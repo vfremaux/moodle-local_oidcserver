@@ -45,5 +45,6 @@ $jsonconfig->subject_types_supported = ['0' => 'public'];
 $jsonconfig->id_token_signing_alg_values_supported = ['0' => 'RS256'];
 
 header("Content-type:application/json");
+header("Access-Control-Allow-Origin:*");
 echo json_encode($jsonconfig);
 die;

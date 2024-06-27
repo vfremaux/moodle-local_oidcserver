@@ -48,16 +48,19 @@ class client extends controller {
     public function process($cmd) {
         global $DB;
 
+        $config = get_config('local_oidcserver');
+        $clientkeysize = $config->clientkeysize ?? 13;
+
         parent::process($cmd);
         // Process explicit commands.
 
         switch ($cmd) {
             case 'add' : {
                 if (!empty($this->data->generateidentifier)) {
-                    $this->data->identifier = $this->generate(13);
+                    $this->data->identifier = $this->generate($clientkeysize);
                 }
                 if (!empty($this->data->generatesecret)) {
-                    $this->data->secret = $this->generate(13);
+                    $this->data->secret = $this->generate($clientkeysize);
                 }
                 unset($this->data->generateidentifier);
                 unset($this->data->generatesecret);
