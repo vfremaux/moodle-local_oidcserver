@@ -40,10 +40,12 @@ function local_oidcserver_supports_feature($feature = null) {
         $supports = [
             'pro' => [
                 'clients' => ['unlimited'],
-                'extended' => ['singlelogout', 'userfiltering']
+                'extended' => ['singlelogout', 'userfiltering'],
+                'keys' => ['customsize']
             ],
             'community' => [
-                'clients' => ['limited']
+                'clients' => ['limited'],
+                'keys' => ['fixedsize']
             ],
         ];
     }

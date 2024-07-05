@@ -49,7 +49,11 @@ class client extends controller {
         global $DB;
 
         $config = get_config('local_oidcserver');
-        $clientkeysize = $config->clientkeysize ?? 13;
+        if (local_oidcserver_supports_feature('keys/customsize')) {
+            $clientkeysize = $config->clientkeysize ?? 13;
+        } else {
+            $clientkeysize = 13;
+        }
 
         parent::process($cmd);
         // Process explicit commands.
