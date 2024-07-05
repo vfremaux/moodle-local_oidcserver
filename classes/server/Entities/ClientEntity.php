@@ -157,7 +157,13 @@ class ClientEntity implements ClientEntityInterface
      * @return string|string[]
      */
     public function getRedirectUri() {
-        return $this->redirecturi;
+        $alternatives = $this->getAltRedirectUris();
+        if (empty($alternatives)) {
+            return $this->redirecturi;
+        }
+        // Return array, where [0] is the client main redirecturi.
+        $redirecturis = [$this->redirecturi] + $alternatives;
+        return $redirecturis;
     }
 
     /**

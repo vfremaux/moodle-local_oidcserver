@@ -59,12 +59,6 @@ if ($hassiteconfig) {
     $desc = get_string('configencryptionkey_desc', 'local_oidcserver');
     $settings->add(new admin_setting_configtextarea($key, $label, $desc, ''));
 
-    $key = 'local_oidcserver/clientskeysize';
-    $label = get_string('configclientskeysize', 'local_oidcserver');
-    $desc = get_string('configclientskeysize_desc', 'local_oidcserver');
-    $default = 13;
-    $settings->add(new admin_setting_configtextarea($key, $label, $desc, $default));
-
     $key = 'local_oidcserver/getconsent';
     $label = get_string('configgetconsent', 'local_oidcserver');
     $desc = get_string('configgetconsent_desc', 'local_oidcserver');
