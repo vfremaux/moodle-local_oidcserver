@@ -116,6 +116,7 @@ $response = new Response(200);
 
 try {
 
+    header("Access-Control-Allow-Origin:*");
     // Try to respond to the request
     debug_trace("Server tries to respond to token request ");
     $redirectresponse = $server->respondToAccessTokenRequest($request, $response);
@@ -129,7 +130,7 @@ try {
     debug_trace("Token request failed on exception ");
     // All instances of OAuthServerException can be formatted into a HTTP response
     $str = $exception->generateHttpResponse($response);
-    debug_trace($str);
+    // debug_trace($str);
     $response->send();
 } catch (\Exception $exception) {
 

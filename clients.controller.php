@@ -26,11 +26,13 @@
 
 namespace local_oidcserver\controllers;
 
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
+
 use moodle_url;
 
 require_once($CFG->dirroot.'/local/oidcserver/classes/controller.php');
 
-class client extends controller {
+class clients extends controller {
 
     public function receive($cmd, $data = []) {
         parent::receive($cmd, $data);
@@ -40,7 +42,7 @@ class client extends controller {
             case "delete":
             case "unsetconfidential":
             case "setconfidential": {
-                $this->data->clientid = required_param('clientid', PARAM_INT);
+                $this->data->clientid = required_param('id', PARAM_INT);
             }
         }
     }
