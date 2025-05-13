@@ -40,7 +40,7 @@ $PAGE->set_pagelayout('admin');
 $renderer = $PAGE->get_renderer('local_oidcserver');
 
 if (!empty($action)) {
-    $controller = new \local_oidcserver\controllers\scope();
+    $controller = new \local_oidcserver\controllers\scopes();
     $controller->receive($action);
     $return = $controller->process($action);
     if ($return) {

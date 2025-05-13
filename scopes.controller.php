@@ -28,9 +28,10 @@ namespace local_oidcserver\controllers;
 
 use moodle_url;
 
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/controller.php');
 
-class scope extends controller {
+class scopes extends controller {
 
     public function receive($cmd, $data = []) {
         parent::receive($cmd, $data);
@@ -38,7 +39,7 @@ class scope extends controller {
         // Receive explicit commands.
         switch ($cmd) {
             case "delete": {
-                $this->data->scopeid = required_param('scopeid', PARAM_INT);
+                $this->data->scopeid = required_param('id', PARAM_INT);
             }
         }
     }

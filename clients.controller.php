@@ -26,11 +26,13 @@
 
 namespace local_oidcserver\controllers;
 
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
+
 use moodle_url;
 
 require_once($CFG->dirroot.'/local/oidcserver/classes/controller.php');
 
-class client extends controller {
+class clients extends controller {
 
     public function receive($cmd, $data = []) {
         parent::receive($cmd, $data);
@@ -40,7 +42,7 @@ class client extends controller {
             case "delete":
             case "unsetconfidential":
             case "setconfidential": {
-                $this->data->clientid = required_param('clientid', PARAM_INT);
+                $this->data->clientid = required_param('id', PARAM_INT);
             }
         }
     }
@@ -49,7 +51,11 @@ class client extends controller {
         global $DB;
 
         $config = get_config('local_oidcserver');
-        $clientkeysize = $config->clientkeysize ?? 13;
+        if (local_oidcserver_supports_feature('keys/customsize')) {
+            $clientkeysize = $config->clientkeysize ?? 13;
+        } else {
+            $clientkeysize = 13;
+        }
 
         parent::process($cmd);
         // Process explicit commands.

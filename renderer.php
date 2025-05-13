@@ -119,7 +119,7 @@ class local_oidcserver_renderer extends plugin_renderer_base {
 
     public function tabs($view) {
         $tabname = get_string('clients', 'local_oidcserver');
-        $row[] = new tabobject('clients', new moodle_url('/local/oiddcserver/clients.php'), $tabname);
+        $row[] = new tabobject('clients', new moodle_url('/local/oidcserver/clients.php'), $tabname);
         $tabname = get_string('scopes', 'local_oidcserver');
         $row[] = new tabobject('scopes', new moodle_url('/local/oidcserver/scopes.php'), $tabname);
         /*

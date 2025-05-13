@@ -46,7 +46,7 @@ if ($form->is_cancelled()) {
 }
 
 if ($data = $form->get_data()) {
-    $controller = new \local_oidcserver\controllers\scope();
+    $controller = new \local_oidcserver\controllers\scopes();
     if (empty($data->id)) {
         $controller->receive('add', $data);
         $return = $controller->process('add');
