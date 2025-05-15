@@ -26,14 +26,14 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2023032603;   // The (date) version of this plugin.
+$plugin->version  = 2025051500;   // The (date) version of this plugin.
 $plugin->requires = 2022112801;   // Requires this Moodle version.
 $plugin->component = 'local_oidcserver';
-$plugin->release = '4.1.0 (build 2023032603)';
+$plugin->release = '4.1.0 (build 2025051500)';
 $plugin->maturity = MATURITY_RC;
 $plugin->supported = [401, 402];
 
 // Non moodle attributes.
-$plugin->codeincrement = '4.1.0001';
+$plugin->codeincrement = '4.1.0002';
 $plugin->privacy = 'dualrelease';
 
