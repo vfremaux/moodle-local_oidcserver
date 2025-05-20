@@ -73,8 +73,8 @@ class oidcserver_client_form extends moodleform {
         $mform->addHelpButton('userallow', 'userallow', 'local_oidcserver');
         $mform->setType('userallow', PARAM_TEXT);
 
-        $mform->addElement('textarea', 'userdeny', get_string('userallow', 'local_oidcserver'));
-        $mform->addHelpButton('userdeny', 'userallow', 'local_oidcserver');
+        $mform->addElement('textarea', 'userdeny', get_string('userdeny', 'local_oidcserver'));
+        $mform->addHelpButton('userdeny', 'userdeny', 'local_oidcserver');
         $mform->setType('userdeny', PARAM_TEXT);
 
         $mform->addElement('advcheckbox', 'isconfidential', get_string('isconfidential', 'local_oidcserver'));
