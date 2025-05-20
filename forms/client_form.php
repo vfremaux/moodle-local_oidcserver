@@ -48,7 +48,7 @@ class oidcserver_client_form extends moodleform {
         $mform->setType('secret', PARAM_TEXT);
         $mform->disabledIf('secret', 'generatesecret', 'checked');
 
-        $group2[] = $mform->createElement('checkbox', 'generatesecret', get_string('generate', 'local_oidcserver'));
+        $group2[] = $mform->createElement('checkbox', 'generatesecret', '');
         $mform->setType('generatesecret', PARAM_BOOL);
         $mform->addGroup($group2, 'secretgroup', get_string('secret', 'local_oidcserver'), [get_string('generate', 'local_oidcserver')], false);
 
