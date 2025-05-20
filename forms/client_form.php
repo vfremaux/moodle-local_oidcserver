@@ -27,7 +27,7 @@ require_once($CFG->dirroot.'/lib/formslib.php');
 class oidcserver_client_form extends moodleform {
 
     function definition() {
-        
+
         $mform = $this->_form;
 
         $mform->addElement('hidden', 'id');
@@ -61,7 +61,7 @@ class oidcserver_client_form extends moodleform {
         $mform->addHelpButton('redirecturi', 'redirecturi', 'local_oidcserver');
         $mform->addRule('redirecturi', null, 'required');
 
-        $mform->addElement('text', 'altredirecturi', get_string('altredirecturis', 'local_oidcserver'), "size=80 maxlength=2048");
+        $mform->addElement('text', 'altredirecturi', get_string('altredirecturi', 'local_oidcserver'), "size=80 maxlength=2048");
         $mform->setType('altredirecturi', PARAM_TEXT);
         $mform->addHelpButton('altredirecturi', 'altredirecturi', 'local_oidcserver');
 
