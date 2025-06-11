@@ -73,7 +73,7 @@ class clients extends controller {
                 }
 
                 if (empty($this->data->altredirecturis)) {
-                    $this->data->redirecturis = ''; // Ensure we have a value
+                    $this->data->altredirecturis = ''; // Ensure we have a value
                 }
 
                 if (empty($this->data->logouturi)) {
