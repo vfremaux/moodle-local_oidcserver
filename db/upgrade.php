@@ -16,15 +16,30 @@
 
 /**
  * @package    local_my
- * @category   local
  * @author     Valery Fremaux <valery.fremaux@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
 function xmldb_local_oidcserver_upgrade($oldversion = 0) {
-
+	global $DB;
     $result = true;
+
+    $dbman = $DB->get_manager();
+
+    if ($oldversion < 2025061101) {
+        // Define table.
+        // Define table to be created.
+        $table = new xmldb_table('local_oidcserver_client');
+
+        $field = new xmldb_field('altredirecturis');
+        $field->set_attributes(XMLDB_TYPE_TEXT, 'small', null, null, null, null, null, 0, 'redirecturi');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_plugin_savepoint(true, 2025061101, 'local', 'oidcserver');
+    }
 
     return $result;
 }
