@@ -61,9 +61,9 @@ class oidcserver_client_form extends moodleform {
         $mform->addHelpButton('redirecturi', 'redirecturi', 'local_oidcserver');
         $mform->addRule('redirecturi', null, 'required');
 
-        $mform->addElement('text', 'altredirecturi', get_string('altredirecturi', 'local_oidcserver'), "size=80 maxlength=2048");
-        $mform->setType('altredirecturi', PARAM_TEXT);
-        $mform->addHelpButton('altredirecturi', 'altredirecturi', 'local_oidcserver');
+        $mform->addElement('text', 'altredirecturis', get_string('altredirecturi', 'local_oidcserver'), "size=80 maxlength=2048");
+        $mform->setType('altredirecturis', PARAM_TEXT);
+        $mform->addHelpButton('altredirecturis', 'altredirecturi', 'local_oidcserver');
 
         $mform->addElement('text', 'singlelogouturi', get_string('singlelogouturi', 'local_oidcserver'), "size=80 maxlength=255");
         $mform->addHelpButton('singlelogouturi', 'singlelogouturi', 'local_oidcserver');
