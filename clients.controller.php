@@ -18,7 +18,6 @@
  * Version details.
  *
  * @package    local_oidcserver
- * @category   local
  * @author     Valery Fremaux <valery.fremaux@gmail.com>
  * @copyright  2010 onwards Valery Fremaux <valery.fremaux@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
@@ -68,6 +67,19 @@ class clients extends controller {
                 if (!empty($this->data->generatesecret)) {
                     $this->data->secret = $this->generate($clientkeysize);
                 }
+
+                if (empty($this->data->redirecturi)) {
+                    $this->data->redirecturi = ''; // Ensure we have a value
+                }
+
+                if (empty($this->data->altredirecturis)) {
+                    $this->data->redirecturis = ''; // Ensure we have a value
+                }
+
+                if (empty($this->data->logouturi)) {
+                    $this->data->logouturi = ''; // Ensure we have a value
+                }
+
                 unset($this->data->generateidentifier);
                 unset($this->data->generatesecret);
                 $DB->insert_record('local_oidcserver_client', $this->data);
