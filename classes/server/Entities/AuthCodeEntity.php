@@ -19,7 +19,7 @@ class AuthCodeEntity extends TokenEntity implements AuthCodeEntityInterface
 {
     protected $redirecturi;
 
-    protected function __construct($id, string $identifier, $time, $useridentifier, ?ClientEntityInterface $client = null, string $redirecturi, int $revoked) {
+    protected function __construct($id, string $identifier, $time, $useridentifier, ?ClientEntityInterface $client = null, string $redirecturi = '', int $revoked = 0) {
         parent::__construct($id, $identifier, $time, $useridentifier, $client);
         $this->redirecturi = $redirecturi;
         $this->revoked = $revoked;
