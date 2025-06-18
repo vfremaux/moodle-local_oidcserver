@@ -27,7 +27,7 @@ require_once($CFG->dirroot.'/lib/formslib.php');
 class oidcserver_client_form extends moodleform {
 
     function definition() {
-        
+
         $mform = $this->_form;
 
         $mform->addElement('hidden', 'id');
@@ -48,7 +48,7 @@ class oidcserver_client_form extends moodleform {
         $mform->setType('secret', PARAM_TEXT);
         $mform->disabledIf('secret', 'generatesecret', 'checked');
 
-        $group2[] = $mform->createElement('checkbox', 'generatesecret', get_string('generate', 'local_oidcserver'));
+        $group2[] = $mform->createElement('checkbox', 'generatesecret', '');
         $mform->setType('generatesecret', PARAM_BOOL);
         $mform->addGroup($group2, 'secretgroup', get_string('secret', 'local_oidcserver'), [get_string('generate', 'local_oidcserver')], false);
 
@@ -61,9 +61,9 @@ class oidcserver_client_form extends moodleform {
         $mform->addHelpButton('redirecturi', 'redirecturi', 'local_oidcserver');
         $mform->addRule('redirecturi', null, 'required');
 
-        $mform->addElement('text', 'altredirecturi', get_string('altredirecturis', 'local_oidcserver'), "size=80 maxlength=255");
-        $mform->setType('altredirecturi', PARAM_TEXT);
-        $mform->addHelpButton('altredirecturi', 'altredirecturi', 'local_oidcserver');
+        $mform->addElement('text', 'altredirecturis', get_string('altredirecturi', 'local_oidcserver'), "size=80 maxlength=2048");
+        $mform->setType('altredirecturis', PARAM_TEXT);
+        $mform->addHelpButton('altredirecturis', 'altredirecturi', 'local_oidcserver');
 
         $mform->addElement('text', 'singlelogouturi', get_string('singlelogouturi', 'local_oidcserver'), "size=80 maxlength=255");
         $mform->addHelpButton('singlelogouturi', 'singlelogouturi', 'local_oidcserver');
@@ -73,8 +73,8 @@ class oidcserver_client_form extends moodleform {
         $mform->addHelpButton('userallow', 'userallow', 'local_oidcserver');
         $mform->setType('userallow', PARAM_TEXT);
 
-        $mform->addElement('textarea', 'userdeny', get_string('userallow', 'local_oidcserver'));
-        $mform->addHelpButton('userdeny', 'userallow', 'local_oidcserver');
+        $mform->addElement('textarea', 'userdeny', get_string('userdeny', 'local_oidcserver'));
+        $mform->addHelpButton('userdeny', 'userdeny', 'local_oidcserver');
         $mform->setType('userdeny', PARAM_TEXT);
 
         $mform->addElement('advcheckbox', 'isconfidential', get_string('isconfidential', 'local_oidcserver'));
