@@ -18,7 +18,7 @@ namespace local_oidcserver\hook\output;
 
 class before_http_headers {
 
-    public static function callback(\core\hook\output\before_http_headers $hook): void) {
+    public static function callback(\core\hook\output\before_http_headers $hook): void {
         $config = get_config('local_oidcserver');
         if (!empty($config->forceopeningcors)) {
             header('Access-Control-Allow-Origin: *');

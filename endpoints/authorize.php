@@ -25,8 +25,8 @@
 // Mount an Authorisation Server and process an Oauth2 AuthnRequest
 
 // Let be sure we have it loaded before session is started, in order to proper deserialize session objects.
-require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/oidcserver/.extlib/oauth_oidc_server/vendor/autoload.php');
-require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/oidcserver/.extlib/oauth_oidc_server/vendor/league/oauth2-server/src/RequestTypes/AuthorizationRequest.php');
+require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/oidcserver/extlib/oauth_oidc_server/vendor/autoload.php');
+require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/oidcserver/extlib/oauth_oidc_server/vendor/league/oauth2-server/src/RequestTypes/AuthorizationRequest.php');
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/oidcserver/classes/server/Entities/ClientEntity.php');
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/oidcserver/classes/server/Entities/ScopeEntity.php');
 
