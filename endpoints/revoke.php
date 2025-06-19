@@ -25,7 +25,7 @@
 // Mount an Authorisation Server and process an Oauth2 AuthnRequest
 
 // Let be sure we have it loaded before session is started, in order to proper deserialize session objects.
-require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/oidcserver/.extlib/oauth_oidc_server/vendor/autoload.php');
+require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/oidcserver/extlib/oauth_oidc_server/vendor/autoload.php');
 
 use local_oidcserver\OAuth2\Server\Repositories\AccessTokenRepository;
 use League\OAuth2\Server\CryptKey;

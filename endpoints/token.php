@@ -27,7 +27,7 @@
 // Adhere to Moodle model.
 include('../../../config.php');
 // Autoload everything (classes, interfaces) needed to operate the Oauth/OpenID server
-require_once($CFG->dirroot.'/local/oidcserver/.extlib/oauth_oidc_server/vendor/autoload.php');
+require_once($CFG->dirroot.'/local/oidcserver/extlib/oauth_oidc_server/vendor/autoload.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/ClientRepository.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/AuthCodeRepository.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/AccessTokenRepository.php');
