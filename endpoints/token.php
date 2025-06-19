@@ -27,7 +27,7 @@
 // Adhere to Moodle model.
 include('../../../config.php');
 // Autoload everything (classes, interfaces) needed to operate the Oauth/OpenID server
-require_once($CFG->dirroot.'/local/oidcserver/.extlib/oauth_oidc_server/vendor/autoload.php');
+require_once($CFG->dirroot.'/local/oidcserver/extlib/oauth_oidc_server/vendor/autoload.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/ClientRepository.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/AuthCodeRepository.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/AccessTokenRepository.php');
@@ -127,11 +127,12 @@ try {
 
 } catch (\League\OAuth2\Server\Exception\OAuthServerException $exception) {
 
-    debug_trace("Token request failed on exception ");
+    debug_trace("Token request failed on exception ".$exception->getMessage());
     // All instances of OAuthServerException can be formatted into a HTTP response
     $str = $exception->generateHttpResponse($response);
     // debug_trace($str);
     $response->send();
+
 } catch (\Exception $exception) {
 
     // Unknown exception
