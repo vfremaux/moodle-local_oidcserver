@@ -36,4 +36,5 @@ $plugin->supported = [401, 402];
 // Non moodle attributes.
 $plugin->codeincrement = '4.1.0004';
 $plugin->privacy = 'dualrelease';
+$plugin->allowvendor = true;
 
