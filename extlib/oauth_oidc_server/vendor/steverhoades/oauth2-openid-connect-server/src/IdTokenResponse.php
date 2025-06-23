@@ -69,8 +69,8 @@ class IdTokenResponse extends BearerTokenResponse
         }
 
         /** @var UserEntityInterface $userEntity */
-        // debug_trace("Processed access token for OIDC");
-        // debug_trace($accessToken);
+        // local_oidcserver_debug_trace("Processed access token for OIDC");
+        // local_oidcserver_debug_trace($accessToken);
         $userEntity = $this->identityProvider->getUserEntityByIdentifier($accessToken->getUserIdentifier());
 
         if (false === is_a($userEntity, UserEntityInterface::class)) {

@@ -44,7 +44,7 @@ class UserRepository extends Repository implements UserRepositoryInterface
     }
 
     public function getUserEntityByIdentifier($identifier) {
-        debug_trace("Identifier : ".$identifier);
+        report_oidcserver_debug_trace("Identifier : ".$identifier);
         return UserEntity::getByIdentifier($identifier);
     }
 }

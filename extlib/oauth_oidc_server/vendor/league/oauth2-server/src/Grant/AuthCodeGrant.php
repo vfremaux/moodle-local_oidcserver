@@ -97,29 +97,29 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
         ResponseTypeInterface $responseType,
         DateInterval $accessTokenTTL
     ) {
-        if (function_exists('debug_trace')) debug_trace("Extract client ids", TRACE_DEBUG);
+        local_oidcserver_debug_trace("Extract client ids", LOCAL_OIDCS_TRACE_DEBUG);
         list($clientId) = $this->getClientCredentials($request);
 
         $client = $this->getClientEntityOrFail($clientId, $request);
 
         // Only validate the client if it is confidential
         if ($client->isConfidential()) {
-            if (function_exists('debug_trace')) debug_trace("Validate confidential client");
+            local_oidcserver_debug_trace("Validate confidential client");
             $this->validateClient($request);
         }
 
         $encryptedAuthCode = $this->getRequestParameter('code', $request, null);
 
         if (!\is_string($encryptedAuthCode)) {
-            if (function_exists('debug_trace')) debug_trace("Exception bad code value ", TRACE_DEBUG);
+            local_oidcserver_debug_trace("Exception bad code value ", LOCAL_OIDCS_TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('code');
         }
 
         try {
             $authCodePayload = \json_decode($this->decrypt($encryptedAuthCode));
             /*
-            debug_trace("Authcode payload decrypted", TRACE_DEBUG);
-            debug_trace($authCodePayload, TRACE_DEBUG);
+            local_oidcserver_debug_trace("Authcode payload decrypted", LOCAL_OIDCS_TRACE_DEBUG);
+            local_oidcserver_debug_trace($authCodePayload, LOCAL_OIDCS_TRACE_DEBUG);
             */
 
             $this->validateAuthorizationCode($authCodePayload, $client, $request);
@@ -132,8 +132,8 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
                 $authCodePayload->user_id
             );
             /*
-            debug_trace("Finalized scopes...", TRACE_DEBUG);
-            debug_trace($scopes, TRACE_DEBUG);
+            local_oidcserver_debug_trace("Finalized scopes...", LOCAL_OIDCS_TRACE_DEBUG);
+            local_oidcserver_debug_trace($scopes, LOCAL_OIDCS_TRACE_DEBUG);
             */
         } catch (LogicException $e) {
             throw OAuthServerException::invalidRequest('code', 'Cannot decrypt the authorization code', $e);
@@ -159,7 +159,7 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
         $responseType->setAccessToken($accessToken);
 
         // Issue and persist new refresh token if given
-        if (function_exists('debug_trace')) debug_trace("Issuing refresh token ...", TRACE_DEBUG);
+        local_oidcserver_debug_trace("Issuing refresh token ...", LOCAL_OIDCS_TRACE_DEBUG);
         $refreshToken = $this->issueRefreshToken($accessToken);
 
         if ($refreshToken !== null) {
@@ -170,7 +170,7 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
         // Revoke used auth code
         $this->authCodeRepository->revokeAuthCode($authCodePayload->auth_code_id);
 
-        if (function_exists('debug_trace')) debug_trace("End process and respond ", TRACE_DEBUG);
+        local_oidcserver_debug_trace("End process and respond ", LOCAL_OIDCS_TRACE_DEBUG);
         return $responseType;
     }
 
@@ -220,34 +220,34 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
         ServerRequestInterface $request
     ) {
         if (!\property_exists($authCodePayload, 'auth_code_id')) {
-            if (function_exists('debug_trace')) debug_trace("Authorization code malformed : missing auth_code_id", TRACE_DEBUG);
+            local_oidcserver_debug_trace("Authorization code malformed : missing auth_code_id", LOCAL_OIDCS_TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('code', 'Authorization code malformed');
         }
 
         if (\time() > $authCodePayload->expire_time) {
-            if (function_exists('debug_trace')) debug_trace("Authorization code has expired", TRACE_DEBUG);
+            local_oidcserver_debug_trace("Authorization code has expired", LOCAL_OIDCS_TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('code', 'Authorization code has expired');
         }
 
         if ($this->authCodeRepository->isAuthCodeRevoked($authCodePayload->auth_code_id) === true) {
-            if (function_exists('debug_trace')) debug_trace("Authorization code has been revoked", TRACE_DEBUG);
+            local_oidcserver_debug_trace("Authorization code has been revoked", LOCAL_OIDCS_TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('code', 'Authorization code has been revoked');
         }
 
         if ($authCodePayload->client_id !== $client->getIdentifier()) {
-            if (function_exists('debug_trace')) debug_trace("Authorization code was not issued to this client", TRACE_DEBUG);
+            local_oidcserver_debug_trace("Authorization code was not issued to this client", LOCAL_OIDCS_TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('code', 'Authorization code was not issued to this client');
         }
 
         // The redirect URI is required in this request
         $redirectUri = $this->getRequestParameter('redirect_uri', $request, null);
         if (empty($authCodePayload->redirect_uri) === false && $redirectUri === null) {
-            if (function_exists('debug_trace')) debug_trace("No redirect uri", TRACE_DEBUG);
+            local_oidcserver_debug_trace("No redirect uri", LOCAL_OIDCS_TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('redirect_uri');
         }
 
         if ($authCodePayload->redirect_uri !== $redirectUri) {
-            if (function_exists('debug_trace')) debug_trace("Redirect uri mismatch", TRACE_DEBUG);
+            local_oidcserver_debug_trace("Redirect uri mismatch", LOCAL_OIDCS_TRACE_DEBUG);
             throw OAuthServerException::invalidRequest('redirect_uri', 'Invalid redirect URI');
         }
     }
@@ -402,10 +402,8 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
                 'code_challenge'        => $authorizationRequest->getCodeChallenge(),
                 'code_challenge_method' => $authorizationRequest->getCodeChallengeMethod(),
             ];
-            if (function_exists('debug_trace')) {
-                debug_trace("Response payload", TRACE_DEBUG);
-                debug_trace($payload, TRACE_DEBUG);
-            }
+            local_oidcserver_debug_trace("Response payload", LOCAL_OIDCS_TRACE_DEBUG);
+            local_oidcserver_debug_trace($payload, LOCAL_OIDCS_TRACE_DEBUG);
 
             $jsonPayload = \json_encode($payload);
 

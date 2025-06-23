@@ -16,7 +16,6 @@
 
 /**
  * @package     local_oidcserver
- * @category    local
  * @author      Valery Fremaux <valery.fremaux@gmail.com>
  * @copyright   Valery Fremaux <valery.fremaux@gmail.com> (MyLearningFactory.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -35,7 +34,7 @@ require($CFG->dirroot.'/local/oidcserver/forms/consent_form.php');
 $url = new moodle_url('/local/oidcserver/consent.php');
 $PAGE->set_url($url);
 $PAGE->set_context(context_system::instance());
-$PAGE->set_pagelayout('admin');
+$PAGE->set_pagelayout('embedded');
 
 require_login();
 

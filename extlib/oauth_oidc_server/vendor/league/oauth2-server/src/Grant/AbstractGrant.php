@@ -372,27 +372,27 @@ abstract class AbstractGrant implements GrantTypeInterface
     protected function getBasicAuthCredentials(ServerRequestInterface $request)
     {
         if (!$request->hasHeader('Authorization')) {
-            debug_trace("Authorization Not found ", TRACE_DEBUG_FINE);
+            local_oidcserver_debug_trace("Authorization Not found ", LOCAL_OIDCS_TRACE_DEBUG_FINE);
             return [null, null];
         }
 
         $header = $request->getHeader('Authorization')[0];
         if (\strpos($header, 'Basic ') !== 0) {
-            debug_trace("Authorization Found but not basic in $header ", TRACE_DEBUG_FINE);
+            local_oidcserver_debug_trace("Authorization Found but not basic in $header ", LOCAL_OIDCS_TRACE_DEBUG_FINE);
             return [null, null];
         }
 
         if (!($decoded = \base64_decode(\substr($header, 6)))) {
-            debug_trace("Authorization Found but undecodable ", TRACE_DEBUG_FINE);
+            local_oidcserver_debug_trace("Authorization Found but undecodable ", LOCAL_OIDCS_TRACE_DEBUG_FINE);
             return [null, null];
         }
 
-        if (\strpos($decoded, ':') === false) {
-            debug_trace("Authorization decoced but malformed - no : ", TRACE_DEBUG_FINE);
+        if (strpos($decoded, ':') === false) {
+            local_oidcserver_debug_trace("Authorization decoced but malformed - no : ", LOCAL_OIDCS_TRACE_DEBUG_FINE);
             return [null, null]; // HTTP Basic header without colon isn't valid
         }
 
-        $parts = \explode(':', $decoded, 2);
+        $parts = explode(':', $decoded, 2);
         return $parts;
     }
 
@@ -457,17 +457,17 @@ abstract class AbstractGrant implements GrantTypeInterface
         $userIdentifier,
         array $scopes = []
     ) {
-        if (function_exists('debug_trace')) debug_trace("Start issuing access token", TRACE_DEBUG);
+        local_oidcserver_debug_trace("Start issuing access token", LOCAL_OIDCS_TRACE_DEBUG);
         $maxGenerationAttempts = self::MAX_RANDOM_TOKEN_GENERATION_ATTEMPTS;
 
-        if (function_exists('debug_trace')) debug_trace("Requiring to repo", TRACE_DEBUG);
+        local_oidcserver_debug_trace("Requiring to repo", LOCAL_OIDCS_TRACE_DEBUG);
         $accessToken = $this->accessTokenRepository->getNewToken($client, $scopes, $userIdentifier);
-        if (function_exists('debug_trace')) debug_trace("Generated ", TRACE_DEBUG);
+        local_oidcserver_debug_trace("Generated ", LOCAL_OIDCS_TRACE_DEBUG);
         $accessToken->setExpiryDateTime((new DateTimeImmutable())->add($accessTokenTTL));
-        if (function_exists('debug_trace')) debug_trace("Set expiry done ", TRACE_DEBUG);
+        local_oidcserver_debug_trace("Set expiry done ", LOCAL_OIDCS_TRACE_DEBUG);
         $accessToken->setPrivateKey($this->privateKey);
 
-        if (function_exists('debug_trace')) debug_trace("access token Generating", TRACE_DEBUG);
+        local_oidcserver_debug_trace("access token Generating", LOCAL_OIDCS_TRACE_DEBUG);
         while ($maxGenerationAttempts-- > 0) {
             $accessToken->setIdentifier($this->generateUniqueIdentifier());
             try {
@@ -542,11 +542,11 @@ abstract class AbstractGrant implements GrantTypeInterface
      */
     protected function issueRefreshToken(AccessTokenEntityInterface $accessToken)
     {
-        if (function_exists('debug_trace')) debug_trace("Make new refresh token", TRACE_DEBUG);
+        local_oidcserver_debug_trace("Make new refresh token", LOCAL_OIDCS_TRACE_DEBUG);
         $refreshToken = $this->refreshTokenRepository->getNewRefreshToken();
 
         if ($refreshToken === null) {
-            if (function_exists('debug_trace')) debug_trace("Could not instanciate", TRACE_DEBUG);
+            local_oidcserver_debug_trace("Could not instanciate", LOCAL_OIDCS_TRACE_DEBUG);
             return null;
         }
 
