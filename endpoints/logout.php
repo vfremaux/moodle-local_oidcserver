@@ -16,7 +16,6 @@
 
 /**
  * @package     local_oidcserver
- * @category    local
  * @author      Valery Fremaux <valery.fremaux@gmail.com>
  * @copyright   Valery Fremaux <valery.fremaux@gmail.com> (MyLearningFactory.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -77,9 +76,7 @@ if (!empty($headers['Authorize'])) {
 
         if (!empty($config->enablesinglelogout)) {
             $user = $DB->get_record('user', ['username' => $atoken->useridentifier]);
-            if (function_exists('debug_trace')) {
-                debug_trace("Logging out {$atoken->useridentifier}", TRACE_DEBUG);
-            }
+            local_oidcserver_debug_trace("Logging out {$atoken->useridentifier}", LOCAL_OIDCS_TRACE_DEBUG);
             \core\session\manager::kill_user_sessions($user->id);
 
             // Now get all other living tokens from the user.
@@ -103,9 +100,7 @@ if (!empty($headers['Authorize'])) {
                     // todo : add proxy out.
 
                     // running services.
-                    if (function_exists('debug_trace')) {
-                        debug_trace("Sending logout signal with token {$atoken} to $remotelogouturi.", TRACE_DEBUG);
-                    }
+                    local_oidcserver_debug_trace("Sending logout signal with token {$atoken} to $remotelogouturi.", LOCAL_OIDCS_TRACE_DEBUG);
                     $raw = curl_exec($ch);
                     // Let silently assume that everything is ok.
                 }
@@ -117,9 +112,7 @@ if (!empty($headers['Authorize'])) {
         $accessTokenRepository->revokeAccessToken($accesstoken);
 
     } else {
-        if (function_exists('debug_trace')) {
-            debug_trace("Oauth Token not found", TRACE_ERRORS);
-        }
+        local_oidcserver_debug_trace("Oauth Token not found", LOCAL_OIDCS_TRACE_ERRORS);
     }
 }
 

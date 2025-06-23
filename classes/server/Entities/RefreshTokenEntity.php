@@ -74,16 +74,16 @@ class RefreshTokenEntity extends TokenEntity implements RefreshTokenEntityInterf
 
         if ($this->id == 0) {
             // try {
-                debug_trace("Inserting ");
-                debug_trace($record);
+                report_oidcserver_debug_trace("Inserting ");
+                local_oidcserver_debug_trace($record, LOCAL_OIDCS_TRACE_DATA);
                 $this->id = $DB->insert_record('local_oidcserver_rtoken', $record);
-                debug_trace("Done insert ");
+                report_oidcserver_debug_trace("Done insert ");
             // } catch (Exception $ex) {
             //    throw new UniqueTokenIdentifierConstraintViolationException();
             //}
         } else {
             $record->id = $this->id;
-            debug_trace("Updating ");
+            report_oidcserver_debug_trace("Updating ");
             $DB->update_record('local_oidcserver_rtoken', $record);
         }
     }

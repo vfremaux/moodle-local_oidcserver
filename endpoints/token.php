@@ -64,7 +64,7 @@ if (!$config->enabled) {
     throw new MoodleException("The OIDC/Oauth2 server is disabled y configuration.");
 }
 
-debug_trace($_REQUEST);
+local_oidcserver_debug_trace($_REQUEST);
 
 if (empty($config->privatekey)) {
     throw new MoodleException("You must provide a valid private key in settings.");
@@ -118,19 +118,19 @@ try {
 
     header("Access-Control-Allow-Origin:*");
     // Try to respond to the request
-    debug_trace("Server tries to respond to token request ");
+    local_oidcserver_debug_trace("Server tries to respond to token request ");
     $redirectresponse = $server->respondToAccessTokenRequest($request, $response);
-    debug_trace("Got response... sending ");
+    local_oidcserver_debug_trace("Got response... sending ");
     $redirectresponse->send();
-    debug_trace("Got response... sent ");
+    local_oidcserver_debug_trace("Got response... sent ");
     die;
 
 } catch (\League\OAuth2\Server\Exception\OAuthServerException $exception) {
 
-    debug_trace("Token request failed on exception ".$exception->getMessage());
+    local_oidcserver_debug_trace("Token request failed on exception ".$exception->getMessage());
     // All instances of OAuthServerException can be formatted into a HTTP response
     $str = $exception->generateHttpResponse($response);
-    // debug_trace($str);
+    // local_oidcserver_debug_trace($str);
     $response->send();
 
 } catch (\Exception $exception) {

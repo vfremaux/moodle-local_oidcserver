@@ -82,7 +82,7 @@ class AccessTokenEntity extends TokenEntity implements AccessTokenEntityInterfac
     public function commit($table = null) {
         global $DB;
 
-        debug_trace("Start commit");
+        report_oidcserver_debug_trace("Start commit");
         $record = parent::commit(null);
         $record->keypath = $this->privatekey->getKeyPath();
         $revoked = 0;
@@ -90,16 +90,16 @@ class AccessTokenEntity extends TokenEntity implements AccessTokenEntityInterfac
 
         if ($this->id == 0) {
             try {
-                debug_trace("Insert ");
-                debug_trace($record);
+                report_oidcserver_debug_trace("Insert ", LOCAL_OIDCS_TRACE_DEBUG);
+                local_oidcserver_debug_trace($record, LOCAL_OIDCS_TRACE_DATA);
                 $this->id = $DB->insert_record('local_oidcserver_atoken', $record);
-                debug_trace("Done Insert ");
+                report_oidcserver_debug_trace("Done Insert ", LOCAL_OIDCS_TRACE_DATA);
             } catch (Exception $ex) {
                 throw new UniqueTokenIdentifierConstraintViolationException();
             }
         } else {
             $record->id = $this->id;
-            debug_trace("Update ");
+            report_oidcserver_debug_trace("Update ", LOCAL_OIDCS_TRACE_DEBUG);
             $DB->update_record('local_oidcserver_atoken', $record);
         }
     }
