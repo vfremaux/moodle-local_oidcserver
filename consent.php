@@ -35,6 +35,7 @@ $url = new moodle_url('/local/oidcserver/consent.php');
 $PAGE->set_url($url);
 $PAGE->set_context(context_system::instance());
 $PAGE->set_pagelayout('embedded');
+$PAGE->requires->css('/local/oidcserver/style.css');
 
 require_login();
 
