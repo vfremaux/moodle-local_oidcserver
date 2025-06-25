@@ -30,6 +30,7 @@ require_once(dirname(dirname(dirname(__FILE__))).'/local/oidcserver/classes/serv
 // Adhere to Moodle.
 require('../../config.php');
 require($CFG->dirroot.'/local/oidcserver/forms/consent_form.php');
+require($CFG->dirroot.'/local/oidcserver/lib.php');
 
 $url = new moodle_url('/local/oidcserver/consent.php');
 $PAGE->set_url($url);

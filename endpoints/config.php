@@ -16,13 +16,13 @@
 
 /**
  * @package     local_oidcserver
- * @category    local
  * @author      Valery Fremaux <valery.fremaux@gmail.com>
  * @copyright   Valery Fremaux <valery.fremaux@gmail.com> (MyLearningFactory.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
+require($CFG->dirroot.'/local/oidcserver/lib.php');
 
 // this page is public and requires no login.
 
