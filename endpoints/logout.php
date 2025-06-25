@@ -29,8 +29,6 @@
 
 // Let be sure we have it loaded before session is started, in order to proper deserialize session objects.
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/oidcserver/extlib/oauth_oidc_server/vendor/autoload.php');
-require_once($CFG->dirroot.'/local/oidcserver/lib.php');
-
 use local_oidcserver\OAuth2\Server\Repositories\AccessTokenRepository;
 use local_oidcserver\OAuth2\Server\Repositories\ClientRepository;
 
@@ -40,6 +38,7 @@ include('../../../config.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/AccessTokenRepository.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/ClientRepository.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Entities/ClientEntity.php');
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
 
 $config = get_config('local_oidcserver');
 

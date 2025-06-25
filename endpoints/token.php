@@ -16,7 +16,6 @@
 
 /**
  * @package     local_oidcserver
- * @category    local
  * @author      Valery Fremaux <valery.fremaux@gmail.com>
  * @copyright   Valery Fremaux <valery.fremaux@gmail.com> (MyLearningFactory.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -38,6 +37,7 @@ require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/UserRe
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Http/ServerRequest.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Http/Stream.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Http/Response.php');
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
 
 use OpenIDConnectServer\IdTokenResponse;
 use OpenIDConnectServer\ClaimExtractor;

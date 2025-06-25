@@ -3,3 +3,13 @@
 #page-local-oidcserver-consent #page-content {
     margin-top: 0;
 }
+
+#page-local-oidcserver-consent .embedded-main  {
+    padding: 30px;
+    margin: auto;
+    max-width: 700px;
+}
+
+#page-local-oidcserver-consent .embedded-main h2 {
+    margin-bottom: 2em;
+}

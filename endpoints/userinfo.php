@@ -31,6 +31,7 @@ require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/oidcserver/cla
 // Adhere to Moodle model.
 include('../../../config.php');
 
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/AccessTokenRepository.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Entities/AccessTokenEntity.php');
 

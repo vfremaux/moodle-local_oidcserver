@@ -33,6 +33,7 @@ use League\OAuth2\Server\CryptKey;
 include('../../../config.php');
 // Autoload everything (classes, interfaces) needed to operate the Oauth/OpenID server
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/AccessTokenRepository.php');
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
 
 $config = get_config('local_oidcserver');
 
