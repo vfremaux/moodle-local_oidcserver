@@ -11,6 +11,7 @@ namespace local_oidcserver\OAuth2\Server\Entities;
 
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Entities/ClientEntity.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Entities/TokenEntity.php');
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
 
 use League\OAuth2\Server\CryptKey;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
@@ -82,7 +83,7 @@ class AccessTokenEntity extends TokenEntity implements AccessTokenEntityInterfac
     public function commit($table = null) {
         global $DB;
 
-        report_oidcserver_debug_trace("Start commit");
+        local_oidcserver_debug_trace("Start commit");
         $record = parent::commit(null);
         $record->keypath = $this->privatekey->getKeyPath();
         $revoked = 0;
@@ -90,16 +91,16 @@ class AccessTokenEntity extends TokenEntity implements AccessTokenEntityInterfac
 
         if ($this->id == 0) {
             try {
-                report_oidcserver_debug_trace("Insert ", LOCAL_OIDCS_TRACE_DEBUG);
+                local_oidcserver_debug_trace("Insert ", LOCAL_OIDCS_TRACE_DEBUG);
                 local_oidcserver_debug_trace($record, LOCAL_OIDCS_TRACE_DATA);
                 $this->id = $DB->insert_record('local_oidcserver_atoken', $record);
-                report_oidcserver_debug_trace("Done Insert ", LOCAL_OIDCS_TRACE_DATA);
+                local_oidcserver_debug_trace("Done Insert ", LOCAL_OIDCS_TRACE_DATA);
             } catch (Exception $ex) {
                 throw new UniqueTokenIdentifierConstraintViolationException();
             }
         } else {
             $record->id = $this->id;
-            report_oidcserver_debug_trace("Update ", LOCAL_OIDCS_TRACE_DEBUG);
+            local_oidcserver_debug_trace("Update ", LOCAL_OIDCS_TRACE_DEBUG);
             $DB->update_record('local_oidcserver_atoken', $record);
         }
     }

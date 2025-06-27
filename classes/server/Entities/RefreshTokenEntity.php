@@ -11,6 +11,7 @@ namespace local_oidcserver\OAuth2\Server\Entities;
 
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Entities/RefreshTokenEntity.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Entities/TokenEntity.php');
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
 
 use StdClass;
 use DateTimeImmutable;
@@ -74,16 +75,16 @@ class RefreshTokenEntity extends TokenEntity implements RefreshTokenEntityInterf
 
         if ($this->id == 0) {
             // try {
-                report_oidcserver_debug_trace("Inserting ");
+                local_oidcserver_debug_trace("Inserting ");
                 local_oidcserver_debug_trace($record, LOCAL_OIDCS_TRACE_DATA);
                 $this->id = $DB->insert_record('local_oidcserver_rtoken', $record);
-                report_oidcserver_debug_trace("Done insert ");
+                local_oidcserver_debug_trace("Done insert ");
             // } catch (Exception $ex) {
             //    throw new UniqueTokenIdentifierConstraintViolationException();
             //}
         } else {
             $record->id = $this->id;
-            report_oidcserver_debug_trace("Updating ");
+            local_oidcserver_debug_trace("Updating ");
             $DB->update_record('local_oidcserver_rtoken', $record);
         }
     }

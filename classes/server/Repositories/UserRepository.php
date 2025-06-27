@@ -11,6 +11,7 @@ namespace local_oidcserver\OAuth2\Server\Repositories;
 
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Repositories/Repository.php');
 require_once($CFG->dirroot.'/local/oidcserver/classes/server/Entities/UserEntity.php');
+require_once($CFG->dirroot.'/local/oidcserver/lib.php');
 
 use League\OAuth2\Server\Repositories\UserRepositoryInterface;
 use League\OAuth2\Server\Entities\ClientENtityInterface;
@@ -44,7 +45,7 @@ class UserRepository extends Repository implements UserRepositoryInterface
     }
 
     public function getUserEntityByIdentifier($identifier) {
-        report_oidcserver_debug_trace("Identifier : ".$identifier);
+        local_oidcserver_debug_trace("Identifier : ".$identifier);
         return UserEntity::getByIdentifier($identifier);
     }
 }
