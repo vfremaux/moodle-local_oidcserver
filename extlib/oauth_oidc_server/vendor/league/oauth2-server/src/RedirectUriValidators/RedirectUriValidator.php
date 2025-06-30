@@ -82,7 +82,11 @@ class RedirectUriValidator implements RedirectUriValidatorInterface
      */
     private function matchExactUri($redirectUri)
     {
-        return \in_array($redirectUri, $this->allowedRedirectUris, true);
+        local_oidcserver_debug_trace("RedirectUriValidator tries to match : ".$redirectUri, LOCAL_OIDCS_TRACE_DEBUG);
+        local_oidcserver_debug_trace("AllowedUris : ".print_r($this->allowedRedirectUris, true), LOCAL_OIDCS_TRACE_DEBUG);
+        $status = \in_array($redirectUri, $this->allowedRedirectUris, true);
+        local_oidcserver_debug_trace("RedirectUriValidator status : ".$status, LOCAL_OIDCS_TRACE_DEBUG);
+        return $status;
     }
 
     /**

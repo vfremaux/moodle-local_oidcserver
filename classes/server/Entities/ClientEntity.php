@@ -162,7 +162,13 @@ class ClientEntity implements ClientEntityInterface
             return $this->redirecturi;
         }
         // Return array, where [0] is the client main redirecturi.
-        $redirecturis = [$this->redirecturi] + $alternatives;
+        $redirecturis = [$this->redirecturi];
+        foreach ($alternatives as $alturi) {
+            $redirecturis[] = $alturi;
+        }
+        local_oidcserver_debug_trace("Client returns Redirect URIs : ", LOCAL_OIDCS_TRACE_DEBUG);
+        local_oidcserver_debug_trace($alternatives, LOCAL_OIDCS_TRACE_DEBUG);
+        local_oidcserver_debug_trace($redirecturis, LOCAL_OIDCS_TRACE_DEBUG);
         return $redirecturis;
     }
 

@@ -298,6 +298,7 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
                 throw OAuthServerException::invalidRequest('redirect_uri');
             }
 
+            local_oidcserver_debug_trace("Validating Redirect URI : $redirecturi", LOCAL_OIDCS_TRACE_DEBUG);
             $this->validateRedirectUri($redirectUri, $client, $request);
         } elseif (empty($client->getRedirectUri()) ||
             (\is_array($client->getRedirectUri()) && \count($client->getRedirectUri()) !== 1)) {

@@ -284,6 +284,7 @@ abstract class AbstractGrant implements GrantTypeInterface
         ClientEntityInterface $client,
         ServerRequestInterface $request
     ) {
+        local_oidcserver_debug_trace($client->getRedirectUri(), LOCAL_OIDCS_TRACE_DEBUG);
         $validator = new RedirectUriValidator($client->getRedirectUri());
         if (!$validator->validateRedirectUri($redirectUri)) {
             $this->getEmitter()->emit(new RequestEvent(RequestEvent::CLIENT_AUTHENTICATION_FAILED, $request));
